@@ -7,8 +7,6 @@ set -eou pipefail
 
 echo "Checking that the tests pass..."
 
-sudo apt-get install -y bats
-
 export SSHPORT=10022
 
 args=(
