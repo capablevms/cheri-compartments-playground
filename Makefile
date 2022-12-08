@@ -16,6 +16,8 @@ TEST_DIR         := tests
 TESTS            := $(notdir $(wildcard $(TEST_DIR)/*))
 TEST_TARGETS     := $(foreach test, $(TESTS), $(BINDIR)/tests/$(test))
 TEST_RUN_TARGETS := $(foreach test, $(TESTS), run-$(test))
+SSH_OPTIONS      := "-o StrictHostKeyChecking no"
+SCP_OPTIONS      := "-o StrictHostKeyChecking no"
 
 CFLAGS           += -Wall -Wextra -Werror -pedantic --std=c17 -fPIC -lelf -g
 
