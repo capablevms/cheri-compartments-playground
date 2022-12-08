@@ -40,7 +40,9 @@ comp_entry(void) {
 
 int
 main(int argc __attribute__((unused)), char **argv) {
-    if (comp_init(argv[0])) {
+    comp_ctx_t ctx;
+
+    if (comp_init(argv[0], &ctx)) {
         perror("failed to initialize compartmentalization lib");
 
         return EXIT_FAILURE;
@@ -48,7 +50,7 @@ main(int argc __attribute__((unused)), char **argv) {
 
     // NOTE: `comp_entry` is not the only entry point of the foo compartment. We
     // could've just as well entered the compartment through `foo`.
-    if (comp_enter(comp_entry)) {
+    if (comp_enter(ctx, comp_entry)) {
         perror("failed to enter compartment");
 
         return EXIT_FAILURE;

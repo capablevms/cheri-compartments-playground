@@ -52,9 +52,9 @@ COMP_MGR_TMP_STACK_TOP:
 // executes an `ldpblr` instruction to branch to this code)
 //
 // Arguments:
-//   X0  - target function (which might be in a different compartment)
-//   C1  - source DDC
-//   X2  - source SP
+//   X0  - the context (comp_ctx_t *)
+//   X1  - target function (which might be in a different compartment)
+//   C2  - source DDC
 //   C29 - manager DDC
 .globl comp_switch
 .hidden comp_switch
@@ -76,8 +76,8 @@ comp_switch:
     // Use the stack returned by `make_manager_stack`
     mov        sp, x19
 
-    // Store the source DDC and the old SP
-    stp        c1, clr, [sp, #-48]!
+    // Store the source DDC and the old SP on the newly created stack
+    stp        c2, clr, [sp, #-48]!
     str        x10, [sp, #32]
 
     // Stack layout at this point:
@@ -95,9 +95,9 @@ comp_switch:
     // Enter the target compartment
     bl         comp_enter
     // Restore the source DDC and the SP
-    ldp        c1, clr, [sp], #32
+    ldp        c2, clr, [sp], #32
     ldr        x10, [sp], #16
-    msr        ddc, c1
+    msr        ddc, c2
     mov        sp, x10
     ret        clr
 

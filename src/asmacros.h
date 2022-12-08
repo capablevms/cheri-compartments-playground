@@ -4,10 +4,11 @@
 #define SWITCH_GLUE                                                    \
     str       clr, [sp, #-16]!                                        ;\
     mrs       c9, ddc                                                 ;\
+    /* *(DDC + 16) contains a pointer to the comp_ctx_t            */ ;\
+    ldr       x0, [x9, #16]                                           ;\
     /* *DDC contains the address of the sealed switcher capability */ ;\
     ldr       c9, [x9]                                                ;\
-    mrs       c1, ddc                                                 ;\
-    mov       x2, sp                                                  ;\
+    mrs       c2, ddc                                                 ;\
     /* C9 contains the address of the sealed switcher capability */   ;\
     ldpblr    c29, [c9]                                               ;\
     /* Restore the clr */                                             ;\

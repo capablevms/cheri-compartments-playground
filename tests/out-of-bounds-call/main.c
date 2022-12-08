@@ -22,13 +22,15 @@ bar(void) {
 
 int
 main(int argc __attribute__((unused)), char **argv) {
-    if (comp_init(argv[0])) {
+    comp_ctx_t ctx;
+
+    if (comp_init(argv[0], &ctx)) {
         perror("failed to initialize compartmentalization lib");
 
         return EXIT_FAILURE;
     }
 
-    if (comp_enter(foo)) {
+    if (comp_enter(ctx, foo)) {
         perror("failed to enter compartment");
 
         return EXIT_FAILURE;
