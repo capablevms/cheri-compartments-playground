@@ -26,7 +26,7 @@ CFLAGS           += -Wall -Wextra -Werror -pedantic --std=c17 -fPIC -lelf -g
 run-%: $(BINDIR)/tests/% $(BINDIR)/$(LIBNAME)
 ifdef SSHPORT
 	scp $(SCP_OPTIONS) -P $(SSHPORT) -r $$(pwd) $(RUNUSER)@$(RUNHOST):$(RUNDIR)
-	ssh $(SSH_OPTIONS) -p $(SSHPORT) $(RUNUSER)@$(RUNHOST) -t 'cd $(RUNDIR)/cheri-comp && LD_LIBRARY_PATH=./bin/ ./bin/tests/$(<F)'
+	ssh $(SSH_OPTIONS) -p $(SSHPORT) $(RUNUSER)@$(RUNHOST) -t 'cd $(RUNDIR)/cheri-compartments-playground && LD_LIBRARY_PATH=./bin/ ./bin/tests/$(<F)'
 else
 	@echo "'$@' requires SSHPORT to be defined."
 	@false

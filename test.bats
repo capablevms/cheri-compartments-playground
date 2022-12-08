@@ -4,7 +4,7 @@
 #
 # $1 - the name of the example to run
 run_example() (
-    ssh "$SSH_OPTIONS" -p "$SSHPORT" "$RUNUSER@$RUNHOST" -t "cd $RUNDIR/cheri-comp && LD_LIBRARY_PATH=./bin/ ./bin/tests/$1"
+    ssh "$SSH_OPTIONS" -p "$SSHPORT" "$RUNUSER@$RUNHOST" -t "cd $RUNDIR/cheri-compartments-playground && LD_LIBRARY_PATH=./bin/ ./bin/tests/$1"
 )
 
 @test "simple inter-compartment calls succeed" {
