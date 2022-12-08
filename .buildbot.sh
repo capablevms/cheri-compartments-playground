@@ -1,11 +1,11 @@
 #!/bin/bash
 #
-# Copyright (c) 2020-2022 The CapableVMs "CHERI Examples" Contributors.
+# Copyright (c) 2020-2022 The CapableVMs Contributors.
 # SPDX-License-Identifier: MIT OR Apache-2.0
 
 set -eou pipefail
 
-echo "Checking that all the purecap examples build for all platforms..."
+echo "Checking that the tests pass..."
 
 export SSHPORT=10022
 
