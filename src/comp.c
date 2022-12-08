@@ -40,7 +40,13 @@ read_ddc() {
 
 void *
 make_manager_stack(void) {
-    return calloc(COMP_MGR_STACK_SIZE, 1);
+    void *sp = calloc(COMP_MGR_STACK_SIZE, 1);
+    if (sp == NULL) {
+        perror("failed to allocate manager stack");
+        exit(EXIT_FAILURE);
+    }
+
+    return sp;
 }
 
 // Parse the section headers of the specified binary.
@@ -60,7 +66,10 @@ init_elf_info(char *bin_path, struct elf_info *elf) {
         return EXIT_FAILURE;
     }
 
-    elf->shdrs = calloc(sizeof(Elf64_Shdr), elf->elf_hdr.e_shnum);
+    if ((elf->shdrs = calloc(sizeof(Elf64_Shdr), elf->elf_hdr.e_shnum)) == NULL) {
+        perror("failed to calloc elf->shdrs");
+        return EXIT_FAILURE;
+    }
 
     for (size_t i = 0; i < elf->elf_hdr.e_shnum; ++i) {
         if (fread(&elf->shdrs[i], sizeof(Elf64_Shdr), 1, elf->elf) != 1) {
@@ -136,7 +145,11 @@ comp_init(char *bin_path, comp_ctx_t *ctx) {
         return EXIT_FAILURE;
     }
 
-    *ctx = (struct comp_ctx *)calloc(sizeof(struct comp_ctx), 1);
+    if ((*ctx = (struct comp_ctx *)calloc(sizeof(struct comp_ctx), 1)) == NULL) {
+        perror("failed to calloc comp_ctx");
+        return EXIT_FAILURE;
+    }
+
     void *__capability *ddc_pcc = malloc(2 * sizeof(void *__capability));
     ddc_pcc[0] = read_ddc();
     ddc_pcc[1] = (void *__capability)comp_switch;
