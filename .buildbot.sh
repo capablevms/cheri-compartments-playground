@@ -5,8 +5,6 @@
 
 set -eou pipefail
 
-su -l buildbot
-
 echo "Checking that the tests pass..."
 
 export SSHPORT=10022
