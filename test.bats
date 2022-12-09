@@ -9,15 +9,18 @@ run_example() (
 
 @test "simple inter-compartment calls succeed" {
     run run_example simple-comp-switch
+    echo $output
     [ "${status}" -eq 0 ]
 }
 
 @test "nested inter-compartment calls succeed" {
     run run_example nested-comp-switch
+    echo $output
     [ "${status}" -eq 0 ]
 }
 
 @test "out-of-compartment-bounds calls trigger SIGPROT" {
     run run_example out-of-bounds-call
+    echo $output
     [ "${status}" -ne 0 ]
 }
